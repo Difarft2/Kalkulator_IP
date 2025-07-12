@@ -1,66 +1,117 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🧮 Kalkulator IP - Laravel IP Calculator
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Kalkulator IP** adalah aplikasi berbasis Laravel untuk menghitung informasi subnetting IPv4 seperti network, netmask, broadcast, dan IP range.  
+Aplikasi ini memiliki tampilan web (Blade) serta menyediakan **API publik berbasis JSON** yang dapat diintegrasikan ke sistem lain (seperti frontend React, mobile app, dsb).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 🔢 Hitung IP, Subnet, Netmask, Broadcast, Host Range
+- 📄 Tampilan web berbasis Laravel Blade
+- 🌐 RESTful API JSON untuk integrasi pihak ketiga
+- 📱 Cocok untuk aplikasi pembelajaran jaringan dan tool sysadmin
+- 🛠️ Terbuka untuk dikembangkan lebih lanjut (open source)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📁 Struktur Folder Penting
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+app/
+├── Http/
+│   └── Controllers/
+│       └── IPCalculatorController.php
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+routes/
+├── web.php        # Untuk tampilan web
+├── api.php        # Untuk endpoint API
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 💻 Cara Penggunaan (Tampilan Web)
 
-### Premium Partners
+Kunjungi halaman utama, masukkan alamat IP dan CIDR (contoh: `192.168.1.1` dan `24`), lalu klik tombol.
+Hasil akan ditampilkan langsung di halaman web.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## 📡 Dokumentasi API (JSON)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### ✅ Parameter Wajib:
 
-## Code of Conduct
+| Parameter | Tipe   | Deskripsi             |
+|-----------|--------|------------------------|
+| `ip`      | string | Alamat IP (IPv4)      |
+| `cidr`    | int    | CIDR subnet (1–32)    |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 🔄 Contoh Request:
 
-## Security Vulnerabilities
+```
+POST http://localhost:8000/calculate-ip?ip=192.168.1.1&cidr=24
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 📥 Contoh Respons JSON:
 
-## License
+```json
+{
+  "ip": "192.168.1.1",
+  "cidr": 24,
+  "netmask": "255.255.255.0",
+  "wildcard": "0.0.0.255",
+  "network": "192.168.1.0/24",
+  "broadcast": "192.168.1.255",
+  "hostMin": "192.168.1.1",
+  "hostMax": "192.168.1.254",
+  "hosts": 254
+}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### ❌ Error Handling:
+
+Jika input tidak valid:
+
+```json
+{
+  "error": "IP address atau CIDR tidak valid."
+}
+```
+
+---
+
+## 🧾 Proyek dalam Portofolio
+
+**🗂️ Proyek: Kalkulator IP Laravel + API**  
+- 📍 **Kategori:** Jaringan Komputer / Alat Bantu Developer  
+- 📅 **Tahun:** 2025  
+- 🧠 **Fungsi:** Hitung IP/Subnet, menyediakan API jaringan  
+- 🖥️ **Teknologi:** Laravel, Blade, JSON API  
+- 📝 **Deskripsi:**  
+  Aplikasi open source kalkulator jaringan IP berbasis Laravel dengan antarmuka web dan API publik, cocok untuk integrasi ke aplikasi lain atau penggunaan mandiri.
+
+> _Proyek ini merupakan bagian dari portofolio publik developer dan dapat digunakan bebas dengan atribusi._
+
+---
+
+## 🛡️ Lisensi
+
+**MIT License**
+
+Hak cipta © 2025 Difarft
+
+Izin diberikan secara gratis kepada siapa pun yang mendapatkan salinan perangkat lunak ini dan file dokumentasi terkait ("Perangkat Lunak"), untuk menangani Perangkat Lunak tanpa batasan, termasuk hak untuk menggunakan, menyalin, mengubah, menggabungkan, menerbitkan, mendistribusikan, mensublisensikan, dan/atau menjual salinan Perangkat Lunak, serta mengizinkan orang yang menerima Perangkat Lunak melakukannya, dengan syarat mencantumkan atribusi kepada pengembang asli.
+
+PERANGKAT LUNAK INI DIBERIKAN "SEBAGAIMANA ADANYA", TANPA JAMINAN APA PUN, BAIK TERSURAT MAUPUN TERSIRAT, TERMASUK NAMUN TIDAK TERBATAS PADA JAMINAN DIPERJUALBELIKAN, KESESUAIAN UNTUK TUJUAN TERTENTU DAN BEBAS DARI PELANGGARAN.  
+DALAM HAL APA PUN PENULIS ATAU PEMEGANG HAK CIPTA TIDAK BERTANGGUNG JAWAB ATAS KLAIM, KERUSAKAN, ATAU KEWAJIBAN LAIN, BAIK DALAM TINDAKAN KONTRAK, KESALAHAN, ATAU LAINNYA, YANG TIMBUL DARI, KELUAR DARI, ATAU SEHUBUNGAN DENGAN PERANGKAT LUNAK ATAU PENGGUNAAN ATAU TRANSAKSI LAIN DALAM PERANGKAT LUNAK.
+
+---
+
+## 📬 Kontak
+
+Jika ada pertanyaan, masukan, atau ingin bekerja sama:
+
+- 📧 Email: mailoffice@difarft.com
+- 📲 Telegram: https://t.me/Difarft
+
